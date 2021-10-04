@@ -1,10 +1,14 @@
 package com.example.getrequest
 
+import android.graphics.BitmapFactory
+import android.icu.number.NumberFormatter.with
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import retrofit2.Callback
 
 class CharacterAdapter(private val context: Callback<List<Data>>,
@@ -14,6 +18,7 @@ class CharacterAdapter(private val context: Callback<List<Data>>,
     class charcterViewHolder(private val view: View): RecyclerView.ViewHolder(view)
     {
         val textView: TextView = view.findViewById(R.id.body)
+        val imageView: ImageView = view.findViewById((R.id.image))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): charcterViewHolder {
@@ -26,12 +31,14 @@ class CharacterAdapter(private val context: Callback<List<Data>>,
     override fun onBindViewHolder(holder: charcterViewHolder, position: Int) {
         val item = dataset[position]
         var str = ""
+        val url = item.img
+        val picasso = Picasso.get()
 
-        str = str + item.name + "\n"+
-                item.appearance + "\n" +
-                item.better_call_saul_appearance + "\n" +
-                item.img + "\n" +
-                item.status + "\n"
+        picasso.load(url)
+            .into(holder.imageView)
+
+        str = str + "Name: " +item.name + "\n"+
+               "Status: "+item.status + "\n"
 
         holder.textView.text = str
     }
