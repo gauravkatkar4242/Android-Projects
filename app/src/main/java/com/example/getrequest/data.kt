@@ -1,6 +1,7 @@
 package com.example.getrequest
 
-class Data (
+
+data class Data (
     val char_id: Int,
     val name: String,
     val birthday: String,
