@@ -1,7 +1,12 @@
 package com.example.getrequest
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "character")
 data class Data (
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val char_id: Int,
     val name: String,
     val birthday: String,

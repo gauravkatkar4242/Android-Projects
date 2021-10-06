@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Charactres : Fragment() {
 
+    lateinit var database : CharacterDatabase
     lateinit var recyclerView: RecyclerView
     var limit = 0
     var offset = 0
@@ -80,6 +83,11 @@ class Charactres : Fragment() {
 
         adapter.submitList(responsebody){
             recyclerView.scrollToPosition(responsebody.size - limit)
+        }
+        database = CharacterDatabase.getDatabase(this.requireContext())
+
+        GlobalScope.launch {
+            database.characterDao().insertCharacter(responsebody[0])
         }
         recyclerView.setHasFixedSize( true)
         recyclerView.adapter = adapter
